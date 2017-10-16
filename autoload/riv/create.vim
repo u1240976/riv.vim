@@ -401,6 +401,16 @@ fun! riv#create#wrap_inline(sign,mode) "{{{
     let recov = a:mode == 'v' ? "\<Esc>gv".(len(a:sign)*2).'l' : a:mode == 'n' ? "\<Esc>" : ''
     exe 'norm!' region.'c'.a:sign."\<C-R>\"".a:sign.recov 
 endfun "}}}
+
+fun! riv#create#wrap_inline2(sign_prev,sign_next,mode) "{{{
+    " We should consider when in visual mode and insert mode.
+    " **This** is a Test
+    let region = a:mode == 'v' ? 'gv' : 'viW'
+    let wrap_len = len(a:sign_prev) + len(a:sign_next)
+    let recov = a:mode == 'v' ? "\<Esc>gv".wrap_len.'l' : a:mode == 'n' ? "\<Esc>" : ''
+    exe 'norm!' region.'c'.a:sign_prev."\<C-R>\"".a:sign_next.recov
+endfun "}}}
+
 fun! riv#create#transition() "{{{
     let lines = ['','----','']
     call append('.',lines)
